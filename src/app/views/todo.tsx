@@ -4,17 +4,19 @@ import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import {
     selectList,
     fetchAll,
-    selectLoading
+    selectLoading,
+    selectOrderType
 } from '../redux/todoSlice';
 import TodoItem from './components/TodoItem';
 
 export function Todo() {
     const todoList = useAppSelector(selectList);
     const loading = useAppSelector(selectLoading);
+    const orderType = useAppSelector(selectOrderType);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(fetchAll(''))
+        dispatch(fetchAll('', orderType));
     }, []);
     console.log(todoList);
     return (

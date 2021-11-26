@@ -5,12 +5,16 @@ import { Todo } from '../model/todo';
 
 export interface TodoState {
     list: Todo[],
-    loading: boolean
+    loading: boolean,
+    orderType: string,
+    search: string
 }
 
 const initialState: TodoState = {
     list: [],
-    loading: true
+    loading: true,
+    orderType: 'asc',
+    search: ''
 };
 
 export const todoSlice = createSlice({
@@ -22,9 +26,12 @@ export const todoSlice = createSlice({
             state.value -= 1;
         },*/
         // Use the PayloadAction type to declare the contents of `action.payload`
-        changeToDoList: (state, action: PayloadAction<Todo[]>) => {
+        changeToDoList: (state, action: PayloadAction<any>) => {
+            console.log('action = ', action);
             state.loading = false
-            state.list = action.payload;
+            state.list = action.payload.list;
+            state.search = action.payload.search;
+            state.orderType = action.payload.orderType
         },
     }
 });
@@ -37,6 +44,8 @@ export const { changeToDoList } = todoSlice.actions;
 
 export const selectList = (state: RootState) => state.todo.list;
 export const selectLoading = (state: RootState) => state.todo.loading;
+export const selectOrderType = (state: RootState) => state.todo.orderType;
+export const selectSearch = (state: RootState) => state.todo.search;
 
 // We can also write thunks by hand, which may contain both sync and async logic.
 // Here's an example of conditionally dispatching actions based on current state.
@@ -50,12 +59,11 @@ export const selectLoading = (state: RootState) => state.todo.loading;
     }
 };*/
 
-export const fetchAll = (search:string) : AppThunk => (
+export const fetchAll = (search:string, orderType:string) : AppThunk => (
     dispatch
 ) => {
-   getAllToDo(search).then((data) => {
-    console.log(data);
-    dispatch(changeToDoList(data.data));
+   getAllToDo(search, orderType).then((data) => {
+    dispatch(changeToDoList({ list: data.data, search, orderType }));
    });
 };
 

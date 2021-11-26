@@ -90,6 +90,10 @@ h3 {
   color:#fff
 }
 
+.button-active {
+  color:#fff
+}
+
 .item-body {
   flex-direction: column;
   padding: 10px;

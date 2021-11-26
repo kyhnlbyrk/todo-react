@@ -9,7 +9,7 @@ const Input = (props: any) => {
         onChange(value);
     }
 
-    const debounceFn = useCallback(_.debounce(handleDebounceFn, 300), []);
+    const debounceFn = useCallback(_.debounce(handleDebounceFn, 300), [props]);
 
     const getIcon = () => {
         switch (icon) {
@@ -19,8 +19,6 @@ const Input = (props: any) => {
                 break;
         }
     };
-
-    console.log(icon);
 
     return (
         <div className="form-outline">
