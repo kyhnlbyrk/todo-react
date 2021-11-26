@@ -2,8 +2,16 @@ import { useCallback } from "react";
 import { RiSearch2Line } from "react-icons/ri";
 import _ from 'lodash';
 
-const Input = (props: any) => {
-    const { onChange, icon } = props;
+interface Props {
+    isDebounce: boolean, 
+    onChange: (text: string) => void, 
+    icon?: string, 
+    placeholder: string,
+    inputValue?: string
+}
+
+const Input = (props: Props) => {
+    const { isDebounce, onChange, icon, placeholder, inputValue } = props;
     
     const handleDebounceFn = (value:string) => {
         onChange(value);
@@ -22,7 +30,7 @@ const Input = (props: any) => {
 
     return (
         <div className="form-outline">
-            <input placeholder="Search..." onChange={(event) => { debounceFn(event.target.value) }} type="search" className="form-control text-input" />
+            <input placeholder={placeholder} value={inputValue} onChange={(event) => { isDebounce ? debounceFn(event.target.value) :  onChange(event.target.value)}} type="search" className="form-control text-input" />
             {icon &&
                 getIcon()
             }
