@@ -29,7 +29,7 @@ export const todoSlice = createSlice({
     }
 });
 
-export const { changeToDoList, } = todoSlice.actions;
+export const { changeToDoList } = todoSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
@@ -50,10 +50,10 @@ export const selectLoading = (state: RootState) => state.todo.loading;
     }
 };*/
 
-export const fetchAll = () : AppThunk => (
+export const fetchAll = (search:string) : AppThunk => (
     dispatch
 ) => {
-   getAllToDo().then((data) => {
+   getAllToDo(search).then((data) => {
     console.log(data);
     dispatch(changeToDoList(data.data));
    });

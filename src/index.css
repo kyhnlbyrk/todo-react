@@ -1,13 +1,152 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Poppins';
+  background-color: #1D252D !important;
+  color: #fff !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  height: 100vh;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+h3 {
+  font-size: 1.2rem !important;
 }
+
+.todo-item {
+  background-color: #394755;
+  border-radius: 5px;
+}
+
+.wrapper {
+  flex: 1;
+  align-items: center;
+}
+
+.root-wrapper {
+  flex: 1;
+  flex-direction: column;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.header {
+  height: 80px !important;
+  width: 100%;
+  border-bottom:1px solid hsla(0,0%,100%,.1);
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.text-input {
+  color: #B5BEC3 !important; 
+  background-color: #4c5b69 !important; 
+  border: none !important; 
+  border-radius: 10px !important;
+  padding-left: 35px !important;
+}
+
+.icon {
+  position: relative;
+  top: -32px;
+  right: -10px;
+}
+
+.header-buttons {
+  flex-direction: row; 
+  font-size: 24px;
+  margin-right: 20px;
+  color: #B5BEC3 !important;
+}
+
+.item-header {
+  text-align: center;
+  font-weight: 600;
+  border-bottom:1px solid hsla(0,0%,100%,.1);
+  padding: 10px
+}
+
+.item-header h3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.header-buttons :first-child {
+  margin-right: 8px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.cursor-pointer :hover {
+  color:#fff
+}
+
+.item-body {
+  flex-direction: column;
+  padding: 10px;
+
+}
+
+.item-body .body-item {
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.item-icon {
+  margin-top: 3px;
+  margin-right: 5px;
+  color: #00C48C;
+}
+
+.label {
+  font-size: 14px;
+}
+
+.tiny-text {
+  font-size: 12px;
+  color: #B5BEC3;
+}
+
+.btn {
+  font-size: 16px !important;
+  padding: .375rem .75rem !important;
+  border-radius: 0rem !important;
+  width: 100% !important;
+}
+
+.btn-success {
+  background-color: #00C48C !important;
+  border-color: #00C48C !important;
+}
+
+.btn-outline-danger {
+  border: none !important;
+  border-color: none !important;
+  border-bottom-left-radius: 5px !important;
+  border-bottom-right-radius: 5px !important;
+}
+
+
+.completed .btn-success {
+  background-color: #394755b0 !important;
+  border-color:#394755b0 !important;
+}
+
+.completed {
+  background-color: #7d9cbb88 !important;
+}
+
+.completed .item-header h3 {
+  text-decoration: line-through;
+}
+
+
