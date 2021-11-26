@@ -1,7 +1,5 @@
 import { post, get } from "./requestService";
 
-export const BASE_URL = "/api/ws";
-
 export function getAllToDo(search: string, orderType: string) {
     const url = '/getTodoList?search=' + search + '&orderType=' + orderType;
     return get(url);

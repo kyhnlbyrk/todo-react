@@ -1,7 +1,7 @@
 import axios from "axios";
 
-//export const BASE_URL = "https://nodejs-basic-todo.herokuapp.com";
-export const BASE_URL = "http://localhost:8080";
+export const BASE_URL = "https://nodejs-basic-todo.herokuapp.com";
+//export const BASE_URL = "http://localhost:8080";
 
 export const config = {
     headers: {
