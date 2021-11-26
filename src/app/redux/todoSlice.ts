@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '../../app/store';
-import { getAllToDo, changeStatus, deleteTodo, createNewTodo } from '../api/todoAPI';
+import { getAllToDo, changeStatus, deleteTodo, createNewTodo, editTodo } from '../api/todoAPI';
 import { Todo } from '../model/todo';
 
 export interface TodoState {
@@ -14,7 +14,7 @@ export interface TodoState {
 const initialState: TodoState = {
     list: [],
     loading: true,
-    orderType: 'asc',
+    orderType: 'desc',
     search: '',
     error: false
 };
@@ -24,9 +24,6 @@ export const todoSlice = createSlice({
     initialState,
     // The `reducers` field lets us define reducers and generate associated actions
     reducers: {
-        /*decrement: (state) => {
-            state.value -= 1;
-        },*/
         // Use the PayloadAction type to declare the contents of `action.payload`
         changeToDoList: (state, action: PayloadAction<any>) => {
             state.loading = false
@@ -55,15 +52,6 @@ export const selectError = (state: RootState) => state.todo.error;
 
 // We can also write thunks by hand, which may contain both sync and async logic.
 // Here's an example of conditionally dispatching actions based on current state.
-/*export const incrementIfOdd = (amount: number): AppThunk => (
-    dispatch,
-    getState
-) => {
-    const currentValue = selectCount(getState());
-    if (currentValue % 2 === 1) {
-        dispatch(incrementByAmount(amount));
-    }
-};*/
 
 export const fetchAll = (search: string, orderType: string): AppThunk => (
     dispatch
@@ -107,6 +95,20 @@ export const deleteToDo = (id: number | undefined, search: string, orderType: st
     dispatch
 ) => {
     deleteTodo(id).then(() => {
+        getAllToDo(search, orderType).then((data) => {
+            dispatch(changeToDoList({ list: data.data, search, orderType }));
+        }).catch((error) => {
+            dispatch(setError(true));
+        });
+    }).catch(() => {
+        dispatch(setError(true));
+    });
+};
+
+export const editItem = (id: number | undefined, name: string, search: string, orderType: string): AppThunk => (
+    dispatch
+) => {
+    editTodo(id, name).then(() => {
         getAllToDo(search, orderType).then((data) => {
             dispatch(changeToDoList({ list: data.data, search, orderType }));
         }).catch((error) => {

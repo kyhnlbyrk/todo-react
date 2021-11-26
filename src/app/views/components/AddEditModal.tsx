@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import Alert from 'react-bootstrap/Alert'
@@ -6,7 +6,7 @@ import Input from './Input';
 
 interface Props {
     id?: number;
-    name?: string;  
+    name?: string | undefined;  
     show: boolean;
     onHide: (hide: boolean) => void;
     onSuccess: (val: string) => void;
@@ -19,12 +19,18 @@ const AddEditModal = (props: Props) => {
     const [newName, setName] = useState<string>();
     const [error, setError] = useState<boolean>(false);
 
+    useEffect(() => {
+        if(name) setName(name);
+    }, [])
+
     const controlEmpty = () => {
         if (!newName || newName === '') {
             setError(true);
             return;
         }
-        onSuccess(newName)
+        onSuccess(newName);
+        setName('');
+        setError(false);
     }
 
     const hide = () => {
@@ -46,7 +52,7 @@ const AddEditModal = (props: Props) => {
                 <Modal.Title>{id ? "Edit" : "Insert"}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Input inputValue={name} isDebounce={false} placeholder={"Name"} onChange={(val: string) => setName(val)} />
+                <Input inputValue={newName} isDebounce={false} placeholder={"Name"} onChange={(val: string) => setName(val)} />
             </Modal.Body>
             <Modal.Footer>
                 <Button onClick={() => { controlEmpty() }} size="lg" variant="success">Save</Button>

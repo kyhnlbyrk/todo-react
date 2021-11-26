@@ -27,6 +27,23 @@ body {
   border-bottom:1px solid hsla(0,0%,100%,.1) !important;
 }
 
+.error-box, .indicator-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  flex-direction: column;
+  text-align: center;
+}
+
+.error-box {
+  color: #dc3545;
+}
+
+.big-icon {
+  font-size: 4rem;
+}
+
 .modal-footer {
   padding: 0px !important;
   border-top:1px solid hsla(0,0%,100%,.1) !important;
@@ -98,7 +115,15 @@ h3 {
   text-align: center;
   font-weight: 600;
   border-bottom:1px solid hsla(0,0%,100%,.1);
-  padding: 10px
+  padding: 10px;
+  flex-direction: row;
+  display: flex;
+  justify-content: space-between;
+  font-size: 24px;
+}
+
+.item-header .edit {
+  margin-top: -7px;
 }
 
 .item-header h3 {
@@ -193,6 +218,29 @@ h3 {
   border-radius: 10px !important;
   height: 36px;
 }
+
+@-webkit-keyframes bounce {
+  to { -webkit-transform: translateY(-30px); }
+}
+@-moz-keyframes bounce {
+  to { -moz-transform: translateY(-30px); }
+}
+@keyframes bounce {
+  to { transform: translateY(-30px); }
+}
+
+.bouncing-arrow {
+  -webkit-animation: bounce .25s infinite alternate;
+  -moz-animation: bounce .25s infinite alternate;
+  animation: bounce .25s infinite alternate;
+}
+
+.bouncing-arrow-wrapper {
+  position: absolute;
+  top: 85px;
+  right: 20px;
+}
+ 
 
 
 

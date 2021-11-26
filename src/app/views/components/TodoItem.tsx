@@ -4,10 +4,12 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
 import moment from 'moment-timezone';
 import { BsClock } from "react-icons/bs";
+import { RiEditLine } from "react-icons/ri";
 import Button from 'react-bootstrap/Button'
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { completeToDo, selectOrderType, selectSearch, deleteToDo } from '../../redux/todoSlice';
+import { completeToDo, selectOrderType, selectSearch, deleteToDo, editItem } from '../../redux/todoSlice';
 import Modal from 'react-bootstrap/Modal'
+import AddEditModal from './AddEditModal';
 
 
 const TodoItem = (props: Todo) => {
@@ -17,7 +19,8 @@ const TodoItem = (props: Todo) => {
     const orderType = useAppSelector(selectOrderType);
     const search = useAppSelector(selectSearch);
 
-    const [deletePopupShow, setDeletePopupShow] = useState(false);
+    const [deletePopupShow, setDeletePopupShow] = useState<boolean>(false);
+    const [editModal, setEditModal] = useState<boolean>(false);
 
     const complete = () => {
         dispatch(completeToDo(id, search, orderType));
@@ -28,10 +31,16 @@ const TodoItem = (props: Todo) => {
         dispatch(deleteToDo(id, search, orderType));
     }
 
+    const edit = (val:string) => {
+        dispatch(editItem(id, val, search, orderType));
+        setEditModal(false);
+    }
+
     const timezone = moment.tz.guess();
 
     return (
         <>
+            {editModal && <AddEditModal id={id} name={name} show={editModal} onHide={ () => { setEditModal(false) }} onSuccess={ (val: string) => { edit(val) }}></AddEditModal>}
             <Modal show={deletePopupShow} onHide={() => { setDeletePopupShow(false) }}>
                 <Modal.Header>
                     <Modal.Title>Hold on!</Modal.Title>
@@ -39,18 +48,25 @@ const TodoItem = (props: Todo) => {
                 <Modal.Body>{name} will be deleted for ever! Are you sure about it?</Modal.Body>
                 <Modal.Footer>
                     <Button onClick={() => { deleteItem() }} size="lg" variant="success">Yes, I am sure</Button>
-                    <Button onClick={() => { setDeletePopupShow(false) }} size="lg" variant="outline-danger">Cancel</Button>  
+                    <Button onClick={() => { setDeletePopupShow(false) }} size="lg" variant="outline-danger">Cancel</Button>
                 </Modal.Footer>
             </Modal>
             <div className='col-xl-3 col-lg-4 col-md-6 mb-3'>
                 <div className={'todo-item' + (status === 1 ? ' completed' : '')}>
-                    <OverlayTrigger
-                        delay={500}
-                        overlay={<Popover body> {name} </Popover>}>
-                        <div className='item-header'>
-                            <h3>{name}</h3>
+                    <div className='item-header'>
+                        <div className='w-100'>
+                            <OverlayTrigger
+                                delay={500}
+                                overlay={<Popover body> {name} </Popover>}>
+                                <h3>{name}</h3>
+                            </OverlayTrigger>
                         </div>
-                    </OverlayTrigger>
+                        {status !== 1 && 
+                            <div className="edit" onClick={() => { setEditModal(true)} }>
+                                <RiEditLine className="cursor-pointer"></RiEditLine>
+                            </div>
+                        }
+                    </div>
 
                     <div className='item-body d-flex'>
                         <div className='body-item d-flex'>
@@ -66,7 +82,7 @@ const TodoItem = (props: Todo) => {
                                 <BsClock className='item-icon' />
                                 <p className="label">Created Time</p>
                             </div>
-                            <p className="tiny-text">{moment.tz(modified_time, timezone).format('DD.MM.YYYY HH:mm')}</p>
+                            <p className="tiny-text">{moment.tz(created_time, timezone).format('DD.MM.YYYY HH:mm')}</p>
                         </div>
                     </div>
 

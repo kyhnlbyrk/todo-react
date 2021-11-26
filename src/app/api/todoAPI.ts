@@ -32,3 +32,12 @@ export function createNewTodo(name: string) {
     }
     return post(url, body);
 }
+
+export function editTodo(id: number | undefined, name: string) {
+    const url = '/editTodo';
+    const body = {
+        id,
+        name
+    }
+    return post(url, body);
+}
